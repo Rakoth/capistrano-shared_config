@@ -19,6 +19,12 @@ module Capistrano
           )
 
           namespace :shared_config do
+            desc 'Create shared config folder'
+            task :setup, roles: [:app, :db] do
+              run "mkdir #{File.join(shared_path, 'config')}"
+            end
+            after 'deploy:setup', 'shared_config:setup'
+
             desc 'Create symlinks for config files from shared_config_symlinks array'
             task :symlinks, roles: [:app, :db] do
               next if shared_config_symlinks.empty?
@@ -54,9 +60,9 @@ module Capistrano
               puts _shared_config_files.inspect
               _shared_config_files.each do |file|
                 puts file.name
-                puts '=' * 80
+                puts ?= * 80
                 puts file.content
-                puts '=' * 80
+                puts ?= * 80
               end
             end
           end
