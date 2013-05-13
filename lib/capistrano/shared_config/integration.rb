@@ -20,13 +20,13 @@ module Capistrano
 
           namespace :shared_config do
             desc 'Create shared config folder'
-            task :setup, roles: [:app, :db] do
+            task :setup do
               run "mkdir #{File.join(shared_path, 'config')}"
             end
             after 'deploy:setup', 'shared_config:setup'
 
             desc 'Create symlinks for config files from shared_config_symlinks array'
-            task :symlinks, roles: [:app, :db] do
+            task :symlinks do
               next if shared_config_symlinks.empty?
               commands = shared_config_symlinks.map do |name|
                 full_name = ConfigFile.name(name)
@@ -38,7 +38,7 @@ module Capistrano
             on run_shared_config_symlinks.first, 'shared_config:symlinks', only: run_shared_config_symlinks.last
 
             desc 'Sync all config files'
-            task :sync, roles: [:app, :db] do
+            task :sync do
               _shared_config_files.each do |file|
                 put(file.content, File.join(shared_path, 'config', file.name))
               end
@@ -46,7 +46,7 @@ module Capistrano
             on run_shared_config_sync.first, 'shared_config:sync', only: run_shared_config_sync.last
 
             desc 'Check all config files'
-            task :check, roles: [:app, :db] do
+            task :check do
               _shared_config_files.each do |file|
                 raise Capistrano::CommandError.new(file.error) unless file.valid?
               end
