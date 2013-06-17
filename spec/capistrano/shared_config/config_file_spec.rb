@@ -22,10 +22,6 @@ describe Capistrano::SharedConfig::ConfigFile do
       File.stub(:exists?).with('./config/config.yml').and_return(true)
     end
 
-    after do
-      File.unstub(:exists?)
-    end
-
     it 'should find local config with given environment' do
       rails_env = 'staging'
       described_class.new('config.yml', binding).location.should == './config/config.yml'
@@ -51,10 +47,6 @@ describe Capistrano::SharedConfig::ConfigFile do
       File.stub(:read).and_return(file_content)
     end
 
-    after do
-      File.unstub(:read)
-    end
-
     it 'should eval erb template with given binding' do
       deploy_to = 'test/path'
       rails_env = 'staging'
@@ -70,7 +62,7 @@ describe Capistrano::SharedConfig::ConfigFile do
     context 'yaml file' do
       subject{described_class.new('test.yml', double(rails_env: 'staging'))}
 
-      it 'should return true for valid yml file' do
+      it 'should return true for valid file' do
         subject.stub(:content).and_return <<-YAML
         test:
           valid: yaml
@@ -80,7 +72,7 @@ describe Capistrano::SharedConfig::ConfigFile do
         subject.error.should be_nil
       end
 
-      it 'should return false for invalid yml file and set error' do
+      it 'should return false for invalid file and set error' do
         subject.stub(:content).and_return <<-YAML
         test:
           invalid: yaml
@@ -95,7 +87,7 @@ describe Capistrano::SharedConfig::ConfigFile do
     context 'rb file' do
       subject{described_class.new('test.rb', double(rails_env: 'staging'))}
 
-      it 'should return true for valid yml file' do
+      it 'should return true for valid file' do
         subject.stub(:content).and_return <<-CODE
         god.watch do
           test
@@ -106,7 +98,7 @@ describe Capistrano::SharedConfig::ConfigFile do
         subject.error.should be_nil
       end
 
-      it 'should return false for invalid yml file and set error' do
+      it 'should return false for invalid file and set error' do
         subject.stub(:content).and_return <<-CODE
         god.watch do
           (test

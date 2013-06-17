@@ -55,14 +55,16 @@ describe Capistrano::SharedConfig::Integration do
     end
 
     it 'should set _shared_config_files for internal use when ENV[FILE] is present' do
-      ENV['FILE'] = 'test_env'
-      cap.set(:shared_config_files, ['test', 'test_1'])
-      Capistrano::SharedConfig::Integration.load_into(cap)
+      begin
+        ENV['FILE'] = 'test_env'
+        cap.set(:shared_config_files, ['test', 'test_1'])
+        Capistrano::SharedConfig::Integration.load_into(cap)
 
-      cap.fetch(:_shared_config_files).should have(1).item
-      cap.fetch(:_shared_config_files).first.name.should == 'test_env.yml'
-
-      ENV.delete('FILE')
+        cap.fetch(:_shared_config_files).should have(1).item
+        cap.fetch(:_shared_config_files).first.name.should == 'test_env.yml'
+      ensure
+        ENV.delete('FILE')
+      end
     end
   end
 
@@ -85,7 +87,6 @@ describe Capistrano::SharedConfig::Integration do
       end
 
       it 'should run shared_config:check before shared_config:sync' do
-        #pending 'Matcher is not working for now'
         cap.should callback('shared_config:check').before('shared_config:sync')
       end
     end

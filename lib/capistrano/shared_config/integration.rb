@@ -55,11 +55,8 @@ module Capistrano
             before 'shared_config:sync', 'shared_config:check'
 
             task :show do
-              puts shared_config_files.inspect
-              puts shared_config_symlinks.inspect
-              puts _shared_config_files.inspect
               _shared_config_files.each do |file|
-                puts file.name
+                puts '', file.name
                 puts ?= * 80
                 puts file.content
                 puts ?= * 80

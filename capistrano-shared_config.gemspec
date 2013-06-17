@@ -7,10 +7,10 @@ Gem::Specification.new do |spec|
   spec.name          = 'capistrano-shared_config'
   spec.version       = Capistrano::SharedConfig::VERSION
   spec.authors       = ['Alexander Stanko']
-  spec.email         = ['astanko@aviasales.ru']
-  spec.description   = %q{See README.md}
-  spec.summary       = %q{This gem provides several capistrano tasks for config files uploading and symlinking during deploy}
-  spec.homepage      = ''
+  spec.email         = ['rakoth3d@gmail.com']
+  spec.description   = %q{This gem provides several capistrano tasks for config files uploading and symlinking during deploy}
+  spec.summary       = %q{Config files management during capistrano deploy}
+  spec.homepage      = 'https://github.com/Rakoth/capistrano-shared_config'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($/)
