@@ -16,7 +16,7 @@ module Capistrano
       end
 
       def self.name name
-        name += '.yml' unless name =~ /\.(yml|conf|rb)$/
+        name += '.yml' unless name =~ /\.(yml|conf|rb|ppk|pem)$/
         name
       end
 
