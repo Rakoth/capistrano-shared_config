@@ -21,7 +21,7 @@ module Capistrano
           namespace :shared_config do
             desc 'Create shared config folder'
             task :setup do
-              run "mkdir #{File.join(shared_path, 'config')}"
+              run "mkdir -p #{File.join(shared_path, 'config')}"
             end
             after 'deploy:setup', 'shared_config:setup'
 

@@ -122,6 +122,16 @@ describe Capistrano::SharedConfig::Integration do
       Capistrano::SharedConfig::Integration.load_into(cap)
     end
 
+    describe 'shared_config:setup' do
+      before do
+        cap.find_and_execute_task('shared_config:setup')
+      end
+
+      it 'should create symlinks for all config files' do
+        cap.should have_run('mkdir -p /shared/config')
+      end
+    end
+
     describe 'shared_config:symlinks' do
       before do
         cap.set(:latest_release, '/release')

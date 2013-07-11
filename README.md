@@ -33,7 +33,8 @@ set :shared_config_symlinks, %w[database, settings.local newrelic.yml] # default
 require 'capistrano/shared_config'
 ```
 
-Notice, you may skip `.yml` extension when configuring configs lists (Known extensions are: `.rb`, `.conf` and `.yml`).
+Notice, you may skip `.yml` extension when configuring configs lists
+(Known extensions are: `.rb`, `.conf`, `.pem`, `.ppk` and `.yml`).
 
 Make sure, you require capistrano/shared\_config after desired `shared_config_files` set
 
