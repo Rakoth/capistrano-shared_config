@@ -1,9 +1,8 @@
 module Matchers
-  extend ::Spec::Matchers::DSL
+  extend ::RSpec::Matchers::DSL
+  include Capistrano::Spec::Helpers
 
   define :callback do |task_name|
-    extend Capistrano::Spec::Helpers
-
     match do |configuration|
       @task = configuration.find_task(task_name)
       callbacks = find_callback(configuration, @on, @task)

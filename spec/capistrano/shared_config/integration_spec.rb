@@ -49,7 +49,7 @@ describe Capistrano::SharedConfig::Integration do
       cap.set(:shared_config_files, ['test', 'test_1'])
       Capistrano::SharedConfig::Integration.load_into(cap)
 
-      cap.fetch(:_shared_config_files).should have(2).items
+      cap.fetch(:_shared_config_files).size.should == 2
       cap.fetch(:_shared_config_files).first.name.should == 'test.yml'
       cap.fetch(:_shared_config_files).last.name.should == 'test_1.yml'
     end
@@ -60,7 +60,7 @@ describe Capistrano::SharedConfig::Integration do
         cap.set(:shared_config_files, ['test', 'test_1'])
         Capistrano::SharedConfig::Integration.load_into(cap)
 
-        cap.fetch(:_shared_config_files).should have(1).item
+        cap.fetch(:_shared_config_files).size.should == 1
         cap.fetch(:_shared_config_files).first.name.should == 'test_env.yml'
       ensure
         ENV.delete('FILE')
