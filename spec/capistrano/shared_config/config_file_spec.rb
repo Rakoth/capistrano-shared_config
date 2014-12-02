@@ -13,6 +13,7 @@ describe Capistrano::SharedConfig::ConfigFile do
       described_class.name('test.conf').should == 'test.conf'
       described_class.name('test.pem').should == 'test.pem'
       described_class.name('test.ppk').should == 'test.ppk'
+      described_class.name('test.config').should == 'test.config'
     end
   end
 
